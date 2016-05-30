@@ -3,11 +3,11 @@ package ru.javawebinar.topjava.util;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.model.UserMealWithExceed;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * GKislin
@@ -28,8 +28,43 @@ public class UserMealsUtil {
 //        .toLocalTime();
     }
 
-    public static List<UserMealWithExceed>  getFilteredMealsWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        // TODO return filtered list with correctly exceeded field
-        return null;
+    public static List<UserMealWithExceed>  getFilteredMealsWithExceeded(
+            List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+
+        Map<LocalDate, List<UserMeal>> dateUserMealMap = new TreeMap<>();
+
+        for (UserMeal userMeal : mealList) {
+
+            LocalDate key = userMeal.getDateTime().toLocalDate();
+            List<UserMeal> userMeals = dateUserMealMap.get(key);
+            if (userMeals == null) {
+                userMeals = new ArrayList<>();
+                dateUserMealMap.put(key, userMeals);
+            }
+
+            userMeals.add(userMeal);
+        }
+
+        List<UserMealWithExceed> result = new ArrayList<>();
+
+        for (List<UserMeal> userMeals : dateUserMealMap.values()) {
+            int totalCalories = 0;
+            for (UserMeal userMeal : userMeals) {
+                totalCalories += userMeal.getCalories();
+            }
+
+            boolean exceed = false;
+            if (totalCalories > caloriesPerDay) {
+                exceed = true;
+            }
+
+            for (UserMeal userMeal : userMeals) {
+                if (TimeUtil.isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime)) {
+                    result.add(new UserMealWithExceed(userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories(), exceed));
+                }
+            }
+        }
+
+        return result;
     }
 }
