@@ -12,17 +12,23 @@
 <table style=" border-style: solid; border-width:1px; width: 600px; border-collapse: collapse;">
     <thead>
     <tr style="background-color: gray;">
+        <td style="width: 30px;">id</td>
         <td style="width: 30px;">date</td>
         <td style="width: 80px;">description</td>
         <td style="width: 80px;">calories</td>
+        <td style="width: 80px;">Update</td>
+        <td style="width: 80px;">Delete</td>
     </tr>
     </thead>
     <c:forEach var="meal" items="${mealList}">
 
         <tr style="color: <c:out value="${meal.exceed ? 'red':'green'}"/>">
+            <td><c:out value="${meal.id}" /></td>
             <td>${f:matches(meal.dateTime, 'dd-MM-yyyy HH:mm')}</td>
             <td><c:out value="${meal.description}" /></td>
             <td><c:out value="${meal.calories}" /></td>
+            <td><a href="controller?action=edit&id=<c:out value="${meal.id}"/>">Update</a></td>
+            <td><a href="controller?action=delete&id=<c:out value="${meal.id}"/>">Delete</a></td>
         </tr>
     </c:forEach>
 </table>

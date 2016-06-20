@@ -15,6 +15,10 @@ import java.util.stream.Collectors;
  * 31.05.2015.
  */
 public class UserMealsUtil {
+
+    private static int idCount = 0;
+    private static final Object synObj = new Object();
+
     public static void main(String[] args) {
         List<UserMeal> mealList = Arrays.asList(
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500),
@@ -28,6 +32,12 @@ public class UserMealsUtil {
         filteredMealsWithExceeded.forEach(System.out::println);
 
         System.out.println(getFilteredWithExceededByCycle(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
+    }
+
+    public static int getNewId() {
+        synchronized (synObj) {
+            return ++idCount;
+        }
     }
 
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
@@ -59,6 +69,6 @@ public class UserMealsUtil {
     }
 
     public static UserMealWithExceed createWithExceed(UserMeal um, boolean exceeded) {
-        return new UserMealWithExceed(um.getDateTime(), um.getDescription(), um.getCalories(), exceeded);
+        return new UserMealWithExceed(um.getId(), um.getDateTime(), um.getDescription(), um.getCalories(), exceeded);
     }
 }
