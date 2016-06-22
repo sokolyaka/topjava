@@ -21,7 +21,7 @@
     </tr>
     </thead>
     <c:forEach var="meal" items="${mealList}">
-
+        <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.UserMealWithExceed"/>
         <tr style="color: <c:out value="${meal.exceed ? 'red':'green'}"/>">
             <td><c:out value="${meal.id}" /></td>
             <td>${f:matches(meal.dateTime, 'dd-MM-yyyy HH:mm')}</td>
