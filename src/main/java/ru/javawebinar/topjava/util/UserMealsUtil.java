@@ -50,6 +50,19 @@ public class UserMealsUtil {
                 .collect(Collectors.toList());
     }
 
+    public static List<UserMealWithExceed> getFilteredByDateWithExceeded(Collection<UserMeal> mealList, LocalDate startDate, LocalDate endDate, int caloriesPerDay) {
+        Map<LocalDate, Integer> caloriesSumByDate = mealList.stream()
+                .collect(
+                        Collectors.groupingBy(um -> um.getDateTime().toLocalDate(),
+                                Collectors.summingInt(UserMeal::getCalories))
+                );
+
+        return mealList.stream()
+                .filter(um -> TimeUtil.isBetween(um.getDateTime().toLocalDate(), startDate, endDate))
+                .map(um -> createWithExceed(um, caloriesSumByDate.get(um.getDateTime().toLocalDate()) > caloriesPerDay))
+                .collect(Collectors.toList());
+    }
+
     public static List<UserMealWithExceed> getFilteredWithExceededByCycle(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
 
         final Map<LocalDate, Integer> caloriesSumPerDate = new HashMap<>();
@@ -67,5 +80,19 @@ public class UserMealsUtil {
 
     public static UserMealWithExceed createWithExceed(UserMeal um, boolean exceeded) {
         return new UserMealWithExceed(um.getId(), um.getDateTime(), um.getDescription(), um.getCalories(), exceeded);
+    }
+
+    public static List<UserMealWithExceed> getFilteredByDateTimeWithExceeded(List<UserMeal> mealList, LocalDateTime from, LocalDateTime to, int caloriesPerDay) {
+        Map<LocalDate, Integer> caloriesSumByDate = mealList.stream()
+                .collect(
+                        Collectors.groupingBy(um -> um.getDateTime().toLocalDate(),
+                                Collectors.summingInt(UserMeal::getCalories))
+                );
+
+        return mealList.stream()
+                .filter(um -> TimeUtil.isBetween(um.getDateTime(), from, to))
+                .map(um -> createWithExceed(um, caloriesSumByDate.get(um.getDateTime().toLocalDate()) > caloriesPerDay))
+                .collect(Collectors.toList());
+
     }
 }

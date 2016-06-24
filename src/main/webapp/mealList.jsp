@@ -21,6 +21,34 @@
     <h3>Meal list</h3>
     <a href="meals?action=create">Add Meal</a>
     <hr>
+    <hr>
+    <form method="post" action="meals">
+        <input type="hidden" name="action" value="sort">
+        <table border="1" cellpadding="8"  cellspacing="0">
+            <thead>
+            <tr>
+                <th>Date from:</th>
+                <th>Date to:</th>
+            </tr>
+            </thead>
+            <tr>
+                <th><input type="date" value="" name="datefrom"></th>
+                <th><input type="date" value="" name="dateto"></th>
+            </tr>
+            <thead>
+            <tr>
+                <th>Time from:</th>
+                <th>Time to:</th>
+            </tr>
+            <tr>
+                <th><input type="time" value="" name="timefrom"></th>
+                <th><input type="time" value="" name="timeto"></th>
+            </tr>
+            </thead>
+        </table>
+
+        <button type="submit">Filter</button>
+    </form>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>
