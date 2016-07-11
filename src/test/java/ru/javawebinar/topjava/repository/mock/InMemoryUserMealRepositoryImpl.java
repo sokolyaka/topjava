@@ -27,7 +27,7 @@ public class InMemoryUserMealRepositoryImpl implements UserMealRepository {
 
     // Map  userId -> (mealId-> meal)
     private Map<Integer, Map<Integer, UserMeal>> repository = new ConcurrentHashMap<>();
-    private AtomicInteger counter = new AtomicInteger(0);
+    private AtomicInteger counter = new AtomicInteger(100001);
 
     {
         UserMealsUtil.MEAL_LIST.forEach(um -> save(um, USER_ID));
