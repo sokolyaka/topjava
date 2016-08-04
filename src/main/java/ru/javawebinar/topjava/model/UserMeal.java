@@ -1,11 +1,13 @@
 package ru.javawebinar.topjava.model;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-import static ru.javawebinar.topjava.model.UserMeal.GET;
 import static ru.javawebinar.topjava.model.UserMeal.GET_ALL;
 import static ru.javawebinar.topjava.model.UserMeal.GET_BETWEEN;
 
@@ -13,30 +15,28 @@ import static ru.javawebinar.topjava.model.UserMeal.GET_BETWEEN;
  * GKislin
  * 11.01.2015.
  */
-@Entity
-@Table(name = "meals")
 @NamedQueries({
         @NamedQuery(name = GET_ALL,
-                query = "SELECT um FROM UserMeal um WHERE um.user.id = :userId ORDER BY um.dateTime"),
-        @NamedQuery(name = GET,
-                query = "SELECT um FROM UserMeal um WHERE um.user.id = :userId AND um.id = :id"),
+                query = "SELECT um FROM UserMeal um WHERE um.user.id = :userId ORDER BY um.dateTime DESC"),
         @NamedQuery(name = GET_BETWEEN,
-                query = "SELECT um FROM UserMeal um WHERE um.dateTime BETWEEN :startDate AND :endDate AND um.user.id = :userId")})
+                query = "SELECT um FROM UserMeal um WHERE um.dateTime BETWEEN :startDate AND :endDate AND um.user.id = :userId ORDER BY um.dateTime DESC")})
+@Entity
+@Table(name = "meals")
 public class UserMeal extends BaseEntity {
 
     public static final String GET_ALL = "UserMeal.getAll";
-    public static final String GET = "UserMeal.get";
     public static final String GET_BETWEEN = "UserMeal.getBetween";
 
     @Column(name = "date_time", nullable = false)
-    @NotEmpty
+    @NotNull
     private LocalDateTime dateTime;
 
     @Column(name = "description", nullable = false)
+    @NotNull
     private String description;
 
     @Column(name = "calories", nullable = false)
-    @NotEmpty
+    @Digits(fraction = 0, integer = 4)
     protected int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)

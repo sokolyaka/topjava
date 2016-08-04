@@ -37,6 +37,8 @@ public class MealTestData {
     }
 
     public static UserMeal getUpdated() {
-        return new UserMeal(MEAL1_ID, MEAL1.getDateTime(), "Обновленный завтрак", 200);
+        UserMeal userMeal = new UserMeal(MEAL1_ID, MEAL1.getDateTime(), "Обновленный завтрак", 200);
+        userMeal.setUser(UserTestData.USER);
+        return userMeal;
     }
 }
