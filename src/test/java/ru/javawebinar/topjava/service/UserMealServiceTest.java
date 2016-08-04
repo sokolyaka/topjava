@@ -1,7 +1,12 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
+import org.junit.runners.model.Statement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -26,6 +31,18 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class UserMealServiceTest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UserMealServiceTest.class);
+
+    @Rule
+    public TestRule testRule = (base, description) -> new Statement() {
+        @Override
+        public void evaluate() throws Throwable {
+            long start = System.currentTimeMillis();
+            base.evaluate();
+            LOG.debug("Test time: " + (System.currentTimeMillis() - start));
+        }
+    };
 
     @Autowired
     protected UserMealService service;
