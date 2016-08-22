@@ -36,7 +36,7 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 @ActiveProfiles(Profiles.ACTIVE_DB)
 public class UserMealServiceTest {
-    private static final Logger LOG = LoggerFactory.getLogger(UserMealServiceTest.class);;
+    private static final Logger LOG = LoggerFactory.getLogger(UserMealServiceTest.class);
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
