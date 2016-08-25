@@ -41,8 +41,8 @@
 	          maxIdleTime="1800"  maxIdleTimeExcessConnections="120" idleConnectionTestPeriod="30"
               acquireIncrement="1"     testConnectionOnCheckout="true"
               removeAbandoned="true"   logAbandoned="true"
-              username="user"
-              password="password"
+              username="postgres"
+              password="postgres"
               driverClassName="org.postgresql.Driver"
               url="jdbc:postgresql://localhost:5432/topjava"/>
               <!--url="jdbc:postgresql://ec2-54-217-202-110.eu-west-1.compute.amazonaws.com:5432/dehm6lvm8bink0?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"-->
