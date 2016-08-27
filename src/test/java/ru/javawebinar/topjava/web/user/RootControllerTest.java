@@ -15,6 +15,16 @@ import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
  * 10.04.2015.
  */
 public class RootControllerTest extends AbstractControllerTest {
+    @Test
+    public void mealList() throws Exception {
+        mockMvc.perform(get("/meals"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("mealList"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/mealList.jsp"))
+                .andExpect(model().attribute("mealList", hasSize(6)));
+
+    }
 
     @Test
     public void testUserList() throws Exception {
