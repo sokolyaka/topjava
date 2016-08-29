@@ -10,6 +10,8 @@ import ru.javawebinar.topjava.service.UserMealService;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -82,5 +84,13 @@ public class UserMealRestControllerTest extends AbstractControllerTest {
         MATCHER.assertCollectionEquals(Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2), mealService.getAll(USER_ID));
     }
 
-
+    @Test
+    public void testGetBetween() throws Exception {
+        mockMvc
+                .perform(
+                        get(REST_URL + "filter")
+                                .param("startDate", LocalDate.of(2015, Month.MAY, 30).toString())
+                                .param("endDate", LocalDate.of(2015, Month.MAY, 30).toString()))
+                .andExpect(status().isOk());
+    }
 }
