@@ -14,24 +14,40 @@
         <div class="shadow">
             <h3><fmt:message key="meals.title"/></h3>
 
-            <form method="post" action="meals/filter">
-                <dl>
-                    <dt>From Date:</dt>
-                    <dd><input type="date" name="startDate" value="${startDate}"></dd>
-                </dl>
-                <dl>
-                    <dt>To Date:</dt>
-                    <dd><input type="date" name="endDate" value="${endDate}"></dd>
-                </dl>
-                <dl>
-                    <dt>From Time:</dt>
-                    <dd><input type="time" name="startTime" value="${startTime}"></dd>
-                </dl>
-                <dl>
-                    <dt>To Time:</dt>
-                    <dd><input type="time" name="endTime" value="${endTime}"></dd>
-                </dl>
-                <button type="submit"><fmt:message key="meals.filter"/></button>
+            <form class="form" method="get" id="filterForm">
+                <div class="form-group">
+                    <label for="fromDate" class="control-label col-xs-3">From Date:</label>
+
+                    <div class="col-xs-3">
+                        <input type="date" class="form-control" name="fromDate" id="fromDate">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="toDate" class="control-label col-xs-3">To Date:</label>
+
+                    <div class="col-xs-3">
+                        <input type="date" class="form-control" name="toDate" id="toDate">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fromTime" class="control-label col-xs-3">From Time:</label>
+
+                    <div class="col-xs-3">
+                        <input type="time" class="form-control" name="fromTime" id="fromTime">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="toTime" class="control-label col-xs-3">To Time:</label>
+
+                    <div class="col-xs-3">
+                        <input type="time" class="form-control" name="toTime" id="toTime">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit"><fmt:message key="meals.filter"/></button>
             </form>
 
             <hr>
@@ -90,7 +106,8 @@
                         <label for="description" class="control-label col-xs-3">Description</label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" name="description" id="description" placeholder="description">
+                            <input type="text" class="form-control" name="description" id="description"
+                                   placeholder="description">
                         </div>
                     </div>
 
@@ -98,7 +115,8 @@
                         <label for="calories" class="control-label col-xs-3">Date</label>
 
                         <div class="col-xs-9">
-                            <input type="number" class="form-control" name="calories" id="calories" placeholder="calories">
+                            <input type="number" class="form-control" name="calories" id="calories"
+                                   placeholder="calories">
                         </div>
                     </div>
 
@@ -121,8 +139,11 @@
 <script type="text/javascript" src="resources/js/datatablesUtil.js"></script>
 <script type="text/javascript">
 
+
     var ajaxUrl = 'ajax/meals/';
+    var mealsUrl = 'ajax/meals/';
     var datatableApi;
+    var filterForm;
 
     $(function () {
         datatableApi = $('#datatable').dataTable({
@@ -147,6 +168,13 @@
             ]
         });
         makeEditable();
+
+        $('#filterForm').submit(function () {
+            debugger;
+            ajaxUrl = mealsUrl + 'filter?'+$('#filterForm').serialize();
+            updateTable();
+            return false;
+        })
     })
 
 
