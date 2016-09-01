@@ -129,7 +129,7 @@
             "bPaginate": false,
             "bInfo": false,
             "aoColumns": [
-                {"mData": "datetime"},
+                {"mData": "dateTime"},
                 {"mData": "description"},
                 {"mData": "calories"},
                 {
