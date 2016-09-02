@@ -5,7 +5,7 @@ function makeEditable() {
     });
 
     $('.delete').click(function () {
-        deleteRow($(this).attr("id"));
+        deleteRow($(this).closest(".tr").attr('id'));
     });
 
     $('#detailsForm').submit(function () {
@@ -30,8 +30,15 @@ function deleteRow(id) {
 }
 
 function updateTable() {
-    $.get(ajaxUrl, function (data) {
-        datatableApi.fnClearTable();
+    var url;
+    if (ajaxUrl == 'ajax/meals/') {
+        url = filterUrl;
+    }else{
+        url = ajaxUrl;
+    }
+
+    $.get(url, function (data) {
+        datatableApi.clear();
         $.each(data, function (key, item) {
             datatableApi.fnAddData(item);
         });

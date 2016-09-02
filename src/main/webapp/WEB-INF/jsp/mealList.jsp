@@ -65,7 +65,7 @@
                 </thead>
                 <c:forEach items="${mealList}" var="meal">
                     <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.UserMealWithExceed"/>
-                    <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
+                    <tr id="${meal.id}" class="${meal.exceed ? 'exceeded' : 'normal'} tr">
                         <td>
                                 <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
                                 <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
@@ -73,8 +73,8 @@
                         </td>
                         <td>${meal.description}</td>
                         <td>${meal.calories}</td>
-                        <td><a class="btn btn-xs btn-primary edit" id="${meal.id}">Update</a></td>
-                        <td><a class="btn btn-xs btn-danger delete" id="${meal.id}">Delete</a></td>
+                        <td><a class="btn btn-xs btn-primary edit" >Update</a></td>
+                        <td><a class="btn btn-xs btn-danger delete">Delete</a></td>
                     </tr>
                 </c:forEach>
             </table>
@@ -140,6 +140,7 @@
 <script type="text/javascript">
 
 
+    var filterUrl = 'ajax/meals/';
     var ajaxUrl = 'ajax/meals/';
     var mealsUrl = 'ajax/meals/';
     var datatableApi;
@@ -170,8 +171,7 @@
         makeEditable();
 
         $('#filterForm').submit(function () {
-            debugger;
-            ajaxUrl = mealsUrl + 'filter?'+$('#filterForm').serialize();
+            filterUrl = mealsUrl + 'filter?'+$('#filterForm').serialize();
             updateTable();
             return false;
         })
