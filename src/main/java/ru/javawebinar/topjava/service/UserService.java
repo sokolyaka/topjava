@@ -27,4 +27,8 @@ public interface UserService {
     void evictCache();
 
     User getWithMeals(int id);
+
+    default void enabled(int id, boolean enabled) {
+        throw new UnsupportedOperationException();
+    }
 }

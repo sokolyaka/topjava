@@ -146,15 +146,21 @@
         });
         makeEditable();
 
-//        $('.checkbox').click(function () {
-//            $(this).
-//            $.ajax({
-//                type : 'POST',
-//                url : ajaxUrl,
-//                data :
-//
-//            })
-//        })
+        $('.checkbox').click(function () {
+            var data = {};
+            data.id = $(this).parents('.tr').attr('id');
+            data.enabled = $(this).prop("checked");
+            $.ajax({
+                type: 'PUT',
+                url: ajaxUrl + "enable",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function () {
+                    updateTable();
+                    successNoty('Saved');
+                }
+            });
+        })
     });
 </script>
 </html>
