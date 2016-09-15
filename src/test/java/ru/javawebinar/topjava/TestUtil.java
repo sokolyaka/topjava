@@ -1,7 +1,10 @@
 package ru.javawebinar.topjava;
 
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import ru.javawebinar.topjava.matcher.ModelMatcher;
+import ru.javawebinar.topjava.model.User;
 
 import java.io.UnsupportedEncodingException;
 
@@ -27,5 +30,9 @@ public class TestUtil {
         public ToStringModelMatcher(Class<T> entityClass) {
             super(Object::toString, entityClass);
         }
+    }
+
+    public static RequestPostProcessor basic(User user) {
+        return SecurityMockMvcRequestPostProcessors.httpBasic(user.getEmail(), user.getPassword());
     }
 }
