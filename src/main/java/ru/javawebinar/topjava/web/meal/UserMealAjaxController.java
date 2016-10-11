@@ -1,9 +1,6 @@
 package ru.javawebinar.topjava.web.meal;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.to.UserMealWithExceed;
@@ -47,19 +44,12 @@ public class UserMealAjaxController extends AbstractUserMealController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<String> updateOrCreate(@Valid UserMeal meal, BindingResult result) {
-        if (result.hasErrors()) {
-            // TODO change to exception handler
-            StringBuilder sb = new StringBuilder();
-            result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
-            return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+    public void updateOrCreate(@Valid UserMeal meal) {
         if (meal.isNew()) {
             super.create(meal);
         } else {
             super.update(meal, meal.getId());
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/filter", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
