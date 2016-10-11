@@ -38,7 +38,9 @@ $(function () {
             {
                 "defaultContent": "",
                 "orderable": false,
-                "render": renderEditBtn
+                "render": function (date, type, row) {
+                    return renderEditBtn(type, row, 'meals.edit');
+                }
             },
             {
                 "defaultContent": "",

@@ -50,7 +50,9 @@ $(function () {
             {
                 "orderable": false,
                 "defaultContent": "",
-                "render": renderEditBtn
+                "render": function (date, type, row) {
+                    return renderEditBtn(type, row, 'users.edit');
+                }
             },
             {
                 "orderable": false,

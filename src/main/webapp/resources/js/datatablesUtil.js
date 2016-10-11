@@ -19,12 +19,14 @@ function makeEditable() {
     });
 }
 
-function add() {
+function add(key) {
     form.find(":input").val("");
+    $('#modalTitle').html(i18n[key]);
     $('#editRow').modal();
 }
 
-function updateRow(id) {
+function updateRow(id, key) {
+    $('#modalTitle').html(i18n[key]);
     $.get(ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(
@@ -105,14 +107,14 @@ function failNoty(event, jqXHR, options, jsExc) {
     });
 }
 
-function renderEditBtn(data, type, row) {
+function renderEditBtn(type, row, key) {
     if (type == 'display') {
-        return '<a class="btn btn-xs btn-primary" onclick="updateRow(' + row.id + ');">Edit</a>';
+        return '<a class="btn btn-xs btn-primary" onclick="updateRow(' + row.id + ',\'' + key + '\');">' + i18n['common.edit'] + '</a>';
     }
 }
 
 function renderDeleteBtn(data, type, row) {
     if (type == 'display') {
-        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">Delete</a>';
+        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">' + i18n['common.delete'] + '</a>';
     }
 }

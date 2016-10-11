@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
@@ -46,11 +47,11 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-8">
-                            <button type="submit" class="btn btn-primary pull-right">Filter</button>
+                            <button type="submit" class="btn btn-primary pull-right"><spring:message code="common.filter"/></button>
                         </div>
                     </div>
                 </form:form>
-                <a class="btn btn-sm btn-info" onclick="add()"><fmt:message key="meals.add"/></a>
+                <a class="btn btn-sm btn-info" onclick="add('meals.add')"><spring:message code="meals.add"/></a>
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
@@ -73,7 +74,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"><fmt:message key="meals.edit"/></h2>
+                <h2 class="modal-title" id="modalTitle"></h2>
             </div>
             <div class="modal-body">
                 <form:form class="form-horizontal" method="post" id="detailsForm">
@@ -113,6 +114,9 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    <jsp:include page="fragments/i18n.jsp"/>
+</script>
 <script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
