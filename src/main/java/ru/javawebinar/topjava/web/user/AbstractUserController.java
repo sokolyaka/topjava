@@ -1,12 +1,11 @@
 package ru.javawebinar.topjava.web.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
 import ru.javawebinar.topjava.to.UserTo;
-import ru.javawebinar.topjava.util.UserUtil;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ public abstract class AbstractUserController {
     public User create(User user) {
         user.setId(null);
         log.info("create " + user);
-        return service.save(UserUtil.prepareToSave(user));
+        return service.save(user);
     }
 
     public void delete(int id) {
@@ -43,7 +42,7 @@ public abstract class AbstractUserController {
     public void update(User user, int id) {
         user.setId(id);
         log.info("update " + user);
-        service.update(UserUtil.prepareToSave(user));
+        service.update(user);
     }
 
     public void update(UserTo userTo) {

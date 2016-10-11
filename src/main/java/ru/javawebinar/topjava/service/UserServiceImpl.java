@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @CacheEvict(value = "users", allEntries = true)
     @Override
     public User save(User user) {
-        return repository.save(user);
+        return repository.save(UserUtil.prepareToSave(user));
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @CacheEvict(value = "users", allEntries = true)
     @Override
     public void update(User user) {
-        repository.save(user);
+        repository.save(UserUtil.prepareToSave(user));
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -68,7 +68,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void update(UserTo userTo) {
         User user = get(userTo.getId());
-        repository.save(UserUtil.updateFromTo(user, userTo));
+        UserUtil.updateFromTo(user, userTo);
+        repository.save(UserUtil.prepareToSave(user));
     }
 
 

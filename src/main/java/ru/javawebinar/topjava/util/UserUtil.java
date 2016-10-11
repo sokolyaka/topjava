@@ -18,12 +18,11 @@ public class UserUtil {
         return new UserTo(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.getCaloriesPerDay());
     }
 
-    public static User updateFromTo(User user, UserTo userTo) {
+    public static void updateFromTo(User user, UserTo userTo) {
         user.setName(userTo.getName());
         user.setEmail(userTo.getEmail());
         user.setCaloriesPerDay(userTo.getCaloriesPerDay());
         user.setPassword(userTo.getPassword());
-        return prepareToSave(user);
     }
 
     public static User prepareToSave(User user) {

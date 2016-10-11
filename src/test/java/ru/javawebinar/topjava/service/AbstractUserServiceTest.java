@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import ru.javawebinar.topjava.UserTestData.*;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
@@ -27,15 +26,15 @@ abstract public class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     public void testSave() throws Exception {
-        TestUser tu = new TestUser(null, "New", "new@gmail.com", "newPass", 1555, false, Collections.singleton(Role.ROLE_USER));
-        User created = service.save(tu.asUser());
-        tu.setId(created.getId());
-        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, tu, USER), service.getAll());
+        User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, Collections.singleton(Role.ROLE_USER));
+        User created = service.save(newUser);
+        newUser.setId(created.getId());
+        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, newUser, USER), service.getAll());
     }
 
     @Test(expected = DataAccessException.class)
     public void testDuplicateMailSave() throws Exception {
-        service.save(new TestUser("Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER).asUser());
+        service.save(new User(null, "Duplicate", "user@yandex.ru", "newPass", 1000, Role.ROLE_USER));
     }
 
     @Test
@@ -74,11 +73,11 @@ abstract public class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     public void testUpdate() throws Exception {
-        TestUser updated = new TestUser(USER);
+        User updated = new User(USER);
         updated.setName("UpdatedName");
         updated.setCaloriesPerDay(330);
         updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
-        service.update(updated.asUser());
+        service.update(updated);
         MATCHER.assertEquals(updated, service.get(USER_ID));
     }
 }

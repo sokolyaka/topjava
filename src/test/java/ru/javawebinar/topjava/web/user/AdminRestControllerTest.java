@@ -96,11 +96,11 @@ public class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        TestUser expected = new TestUser("New", "new@gmail.com", "newPass", Role.ROLE_USER, Role.ROLE_ADMIN);
+        User expected = new User(null, "New", "new@gmail.com", "newPass", 1000, Role.ROLE_USER, Role.ROLE_ADMIN);
         ResultActions action = mockMvc.perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
-                .content(JsonUtil.writeValue(expected.asUser()))).andExpect(status().isCreated());
+                .content(JsonUtil.writeValue(expected))).andExpect(status().isCreated());
 
         User returned = MATCHER.fromJsonAction(action);
         expected.setId(returned.getId());
