@@ -1,11 +1,13 @@
 package ru.javawebinar.topjava.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.util.CollectionUtils;
+import ru.javawebinar.topjava.View;
 import ru.javawebinar.topjava.util.UserUtil;
 
 import javax.persistence.*;
@@ -49,6 +51,7 @@ public class User extends NamedEntity {
     @Column(name = "password", nullable = false)
     @NotEmpty
     @Length(min = 5)
+    @JsonView(View.REST.class)
     protected String password;
 
     @Column(name = "enabled", nullable = false)
